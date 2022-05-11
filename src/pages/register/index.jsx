@@ -3,12 +3,11 @@ import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import style from './index.module.css'
 import axios from 'axios';
-export default function Login() {
+export default function Register() {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
-    // const { username, password } = values
-    console.log(JSON.stringify(values));
-    axios.post(`/user/login`,values).then(res=>{
+    const { username, password } = values
+    axios.post(`/user/login?username=${username}&password=${password}`).then(res=>{
       console.log(res);
     })
   };
@@ -16,7 +15,7 @@ export default function Login() {
   return (
     <div style={{ background: 'rgb(35,39,65)', height: "100vh" }}>
       <div className={style['formContainer']}>
-        <div className={style['title']}>爬牛<span className='iconfont' style={{ fontSize: '28px', padding: '10px' }}>&#xe642;</span></div>
+        <div className={style['title']}>爬牛<span className='iconfont' style={{fontSize:'28px',padding:'10px'}}>&#xe642;</span></div>
         <Form
           name="normal_login"
           className="login-form"
@@ -51,9 +50,24 @@ export default function Login() {
               placeholder="Password"
             />
           </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your Password!',
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
           <Form.Item >
             <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
-              Log in
+              Register
             </Button>
           </Form.Item>
         </Form>

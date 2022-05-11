@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import style from './index.module.css'
 import { UpCircleOutlined, DownCircleOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom';
 export default function Main() {
+    const navigate = useNavigate()
     const [day, setday] = useState(1)
     const change = (str) => {
         setday(str)
-
     }
     return (
         <div>
@@ -18,10 +19,14 @@ export default function Main() {
                 </div>
             </div>
             <div className={style['btn-button']}>
-                <div className={style['btn-box-item']} >
+                <div className={style['btn-box-item']} onClick={()=>{
+                    navigate('/register')
+                }}>
                     <UserAddOutlined /> 注册
                 </div>
-                <div className={style['btn-box-item']} >
+                <div className={style['btn-box-item']} onClick={()=>{
+                    navigate('/login')
+                }}>
                     <UserOutlined /> 登陆
                 </div>
             </div>
@@ -37,7 +42,7 @@ export default function Main() {
                     <div className={style['sun']}></div>
                 </div>
                 <div className={style['sea']}>
-                    <span class='iconfont' style={{fontSize:'100px',color:day===1?'':'white'}}>&#xe642;</span>
+                    <span className='iconfont' style={{fontSize:'100px',color:day===1?'':'white'}}>&#xe642;</span>
                 </div>
             </div>
 
