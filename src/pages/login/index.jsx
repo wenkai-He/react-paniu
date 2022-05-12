@@ -8,7 +8,7 @@ export default function Login() {
   const navigate = useNavigate()
   const onFinish = (values) => {
     const { username } = values
-    axios.post(`/user/login`,values).then(res => {
+    axios.post(`/user/login`, values).then(res => {
       if (res.data.code === 1) {
         localStorage.setItem('token', res.data.token)
       } else {
@@ -28,8 +28,6 @@ export default function Login() {
         }
       })
     })
-
-
   };
 
   return (
@@ -74,11 +72,16 @@ export default function Login() {
             <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            <Button type="link" block onClick={()=>{
+            <Button type="link" block style={{marginTop:'10px'}} onClick={() => {
+              navigate('/codelogin')
+            }}>
+              短信登陆
+            </Button>
+            <Button type="link" block onClick={() => {
               navigate('/register')
             }}>
-     没有账号？去注册
-    </Button>
+              没有账号？去注册
+            </Button>
           </Form.Item>
         </Form>
       </div>

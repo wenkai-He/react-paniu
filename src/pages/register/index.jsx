@@ -1,21 +1,36 @@
 import React from 'react'
-import { Form, Input, Button } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { Form, Input, Button,message} from 'antd';
+import { UserOutlined, LockOutlined,PhoneOutlined,MailOutlined} from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom';
 import style from './index.module.css'
 import axios from 'axios';
 
 export default function Register() {
+  const navigate = useNavigate()
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
-    axios.post('/user/register',values).then(res=>{
-      console.log(res);
+    const {password,ConfirmPassword}=values
+    if(password!==ConfirmPassword){
+      message.error('两次密码不一样，请重试');
+      return;
+    }
+    delete values.ConfirmPassword;
+    axios.post('/user/register', values).then(res => {
+      if(res.data.code===0){
+        message.error('用户名已存在');
+      }else{
+        navigate('/login');
+        message.success(`登陆成功，请您登陆`);
+      }
+    },err => {
+      message.error('This is an error message:' + err);
     })
   };
 
   return (
     <div style={{ background: 'rgb(35,39,65)', height: "100vh" }}>
       <div className={style['formContainer']}>
-        <div className={style['title']}>爬牛<span className='iconfont' style={{fontSize:'28px',padding:'10px'}}>&#xe642;</span></div>
+        <div className={style['title']}>爬牛<span className='iconfont' style={{ fontSize: '28px', padding: '10px' }}>&#xe642;</span></div>
         <Form
           name="normal_login"
           className="login-form"
@@ -51,6 +66,21 @@ export default function Register() {
             />
           </Form.Item>
           <Form.Item
+            name="ConfirmPassword"
+            rules={[
+              {
+                required: true,
+                message: 'Please confirm your Password!',
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Confirm Password"
+            />
+          </Form.Item>
+          <Form.Item
             name="phoneNum"
             rules={[
               {
@@ -60,8 +90,7 @@ export default function Register() {
             ]}
           >
             <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
+              prefix={<PhoneOutlined  className="site-form-item-icon" />}
               placeholder="phoneNum"
             />
           </Form.Item>
@@ -75,24 +104,8 @@ export default function Register() {
             ]}
           >
             <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
+              prefix={<MailOutlined  className="site-form-item-icon" />}
               placeholder="email"
-            />
-          </Form.Item>
-          <Form.Item
-            name="avatar"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your avatar!',
-              },
-            ]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="avatar"
             />
           </Form.Item>
           <Form.Item >

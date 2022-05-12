@@ -6,7 +6,7 @@ export default function StockHome() {
     const [Data, setData] = useState([]);
     const { Search } = Input;
     useEffect(() => {
-        axios.get(`/stock/findAllStock`).then(res => {
+        axios.get(`/stock/getMostRiseStock`).then(res => {
             setData(res.data);
         })
     }, [])
@@ -25,7 +25,7 @@ export default function StockHome() {
         },
         {
             title: 'stockName',
-            dataIndex: 'stockName',
+            dataIndex: 'stock_name',
         },
         {
             title: 'price',
