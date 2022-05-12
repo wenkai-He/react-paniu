@@ -1,16 +1,35 @@
 import React from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom';
 import style from './index.module.css'
 import axios from 'axios';
 export default function Login() {
+  const navigate = useNavigate()
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-    // const { username, password } = values
-    console.log(JSON.stringify(values));
-    axios.post(`/user/login`,values).then(res=>{
-      console.log(res);
+    const { username } = values
+    axios.post(`/user/login`,values).then(res => {
+      if (res.data.code === 1) {
+        localStorage.setItem('token', res.data.token)
+      } else {
+        message.error('用户名或密码错误，请重试');
+        throw new Error('用户名或密码错误')
+      }
+    }, err => {
+      message.error('This is an error message' + err);
+    }).then(res => {
+      axios.get(`/user/UserInfo?username=${username}`).then(res => {
+        if (res.status === 200) {
+          message.success(`登陆成功，${username}欢迎回来`);
+          localStorage.setItem('user', JSON.stringify(res.data))
+          navigate('/stock')
+        } else {
+          message.error('对不起，好像出了点错误')
+        }
+      })
     })
+
+
   };
 
   return (
@@ -55,6 +74,11 @@ export default function Login() {
             <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
+            <Button type="link" block onClick={()=>{
+              navigate('/register')
+            }}>
+     没有账号？去注册
+    </Button>
           </Form.Item>
         </Form>
       </div>

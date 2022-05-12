@@ -3,11 +3,11 @@ import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import style from './index.module.css'
 import axios from 'axios';
+
 export default function Register() {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
-    const { username, password } = values
-    axios.post(`/user/login?username=${username}&password=${password}`).then(res=>{
+    axios.post('/user/register',values).then(res=>{
       console.log(res);
     })
   };
@@ -51,18 +51,48 @@ export default function Register() {
             />
           </Form.Item>
           <Form.Item
-            name="password"
+            name="phoneNum"
             rules={[
               {
                 required: true,
-                message: 'Please input your Password!',
+                message: 'Please input your phoneNum!',
               },
             ]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="phoneNum"
+            />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your e-mail!',
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="email"
+            />
+          </Form.Item>
+          <Form.Item
+            name="avatar"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your avatar!',
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="avatar"
             />
           </Form.Item>
           <Form.Item >

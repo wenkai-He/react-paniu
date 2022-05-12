@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1652195877290') format('truetype');
+  src: url('iconfont.ttf?t=1652323945366') format('truetype');
 }
 
 .iconfont {
@@ -13,5 +13,13 @@
 
 .icon-niu:before {
   content: "\e642";
+}
+
+.icon-weishoucang:before {
+  content: "\e603";
+}
+
+.icon-yishoucang:before {
+  content: "\e614";
 }
 
