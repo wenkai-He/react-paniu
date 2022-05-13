@@ -7,6 +7,7 @@ export default function StockHome() {
     const { Search } = Input;
     useEffect(() => {
         axios.get(`/stock/getMostRiseStock`).then(res => {
+            console.log(res.data);
             setData(res.data);
         })
     }, [])
@@ -19,13 +20,14 @@ export default function StockHome() {
             sorter: {
                 compare: (a, b) => a.code - b.code,
             },
+           
             render: (code) => {
                 return <Link to={`/stock/detail/${code}`}>{code}</Link>
             }
         },
         {
             title: 'stockName',
-            dataIndex: 'stock_name',
+            dataIndex: 'stockName',
         },
         {
             title: 'price',
@@ -33,6 +35,7 @@ export default function StockHome() {
             sorter: {
                 compare: (a, b) => a.price - b.price,
             },
+            
             render: (price) => <span>{price === undefined || '' ? 0 : price}</span>
         },
         {
@@ -41,12 +44,13 @@ export default function StockHome() {
             sorter: {
                 compare: (a, b) => a.fluctuation - b.fluctuation,
             },
+            
             render: (fluctuation) => <span>{fluctuation === undefined || '' ? 0 : fluctuation}</span>
         },
     ];
     const onSearch = (value) => {
         if (value === '') {
-            axios.get(`/stock/findAllStock`).then(res => {
+            axios.get(`/stock/getMostRiseStock`).then(res => {
                 setData(res.data);
             })
         }
