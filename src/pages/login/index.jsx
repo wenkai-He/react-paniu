@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
 import style from './index.module.css'
 import axios from 'axios';
@@ -62,17 +62,17 @@ export default function Login() {
               },
             ]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
               placeholder="Password"
+              iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
           </Form.Item>
           <Form.Item >
             <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            <Button type="link" block style={{marginTop:'10px'}} onClick={() => {
+            <Button type="link" block style={{ marginTop: '10px' }} onClick={() => {
               navigate('/codelogin')
             }}>
               短信登陆

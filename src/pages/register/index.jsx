@@ -1,6 +1,6 @@
 import React from 'react'
-import { Form, Input, Button,message} from 'antd';
-import { UserOutlined, LockOutlined,PhoneOutlined,MailOutlined} from '@ant-design/icons'
+import { Form, Input, Button, message } from 'antd';
+import { UserOutlined, LockOutlined, PhoneOutlined, MailOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
 import style from './index.module.css'
 import axios from 'axios';
@@ -9,20 +9,20 @@ export default function Register() {
   const navigate = useNavigate()
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
-    const {password,ConfirmPassword}=values
-    if(password!==ConfirmPassword){
+    const { password, ConfirmPassword } = values
+    if (password !== ConfirmPassword) {
       message.error('两次密码不一样，请重试');
       return;
     }
     delete values.ConfirmPassword;
     axios.post('/user/register', values).then(res => {
-      if(res.data.code===0){
+      if (res.data.code === 0) {
         message.error('用户名已存在');
-      }else{
+      } else {
         navigate('/login');
         message.success(`登陆成功，请您登陆`);
       }
-    },err => {
+    }, err => {
       message.error('This is an error message:' + err);
     })
   };
@@ -59,10 +59,10 @@ export default function Register() {
               },
             ]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
               placeholder="Password"
+              iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
           </Form.Item>
           <Form.Item
@@ -74,10 +74,10 @@ export default function Register() {
               },
             ]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
               placeholder="Confirm Password"
+              iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
           </Form.Item>
           <Form.Item
@@ -90,7 +90,7 @@ export default function Register() {
             ]}
           >
             <Input
-              prefix={<PhoneOutlined  className="site-form-item-icon" />}
+              prefix={<PhoneOutlined className="site-form-item-icon" />}
               placeholder="phoneNum"
             />
           </Form.Item>
@@ -104,7 +104,7 @@ export default function Register() {
             ]}
           >
             <Input
-              prefix={<MailOutlined  className="site-form-item-icon" />}
+              prefix={<MailOutlined className="site-form-item-icon" />}
               placeholder="email"
             />
           </Form.Item>
