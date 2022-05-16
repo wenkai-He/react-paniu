@@ -44,6 +44,13 @@ function TopHeader(props) {
     setIsModalVisible(true);
   };
 
+  const handleOk = () => {
+    // localStorage.removeItem('user')
+    //   localStorage.removeItem('token')
+    //   navigate('/login')
+    setIsModalVisible(false);
+  };
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -82,6 +89,7 @@ function TopHeader(props) {
         'Content-Type': 'multipart/form-data'
       }
     }).then(res=>{
+      console.log(1);
       setimageUrl(res.data);
     })
     return false;
@@ -99,6 +107,7 @@ function TopHeader(props) {
           'Content-Type': 'multipart/form-data'
         }
       }).then(res=>{
+        console.log(1);
         setimageUrl(res.data);
       })
     }
@@ -142,11 +151,7 @@ function TopHeader(props) {
         <Dropdown overlay={menu} onClick={showModal}>
           <Avatar size="large" icon={<UserOutlined />} src={imageUrl?imageUrl:(avatar?avatar:`https://joeschmoe.io/api/v1/${id}`)} />
         </Dropdown>
-        <Modal title="更换头像" visible={isModalVisible} closable={false} footer={[
-            <Button key="back" onClick={handleCancel}>
-              Return
-            </Button>,
-          ]}>
+        <Modal title="更换头像" visible={isModalVisible} closable={false} onOk={handleOk} onCancel={handleCancel}>
           <Upload
             name="avatar"
             listType="picture-card"

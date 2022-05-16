@@ -1,24 +1,44 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { Form, Input, Button, message, Row, Col } from 'antd';
 import { LockOutlined, PhoneOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
 import style from './index.module.css'
 import axios from 'axios';
 export default function CodeLogin() {
+  const [time, settime] = useState(59)
+  const [buttonStatus, setbuttonStatus] = useState(true)
   const navigate = useNavigate()
   const [phoneNum, setphoneNum] = useState(null)
-  const getPhone=(item)=>{
-    if(item.target.value.length!==11){
+  const getPhone = (item) => {
+    if (item.target.value.length !== 11) {
       message.error('手机号格式错误')
-    }else{
+    } else {
       setphoneNum(item.target.value)
     }
   }
-  const getCode=()=>{
-     axios.post(`/user/login/getCode?phoneNum=${phoneNum}`).then(res=>{
-     })
-    console.log(phoneNum);
-  }
+  const getCode = () => {
+    if(phoneNum===null){
+        message.error('未输入手机号')
+        return;
+    }
+    setbuttonStatus(false)
+    axios.post(`/user/login/getCode?phoneNum=${phoneNum}`).then(res => {
+        message.success('验证码已发送')
+    },err=>{
+        message.error(err)
+    })
+    let times = time;
+    let timer = setInterval(function () {
+        if (times <= 1) {
+            setbuttonStatus(true)
+            settime(59)
+            clearInterval(timer);
+        } else {
+            times -= 1;
+            settime(times);
+        }
+    }, 1000);
+}
   const onFinish = (values) => {
     axios.post(`/user/login/verifyCode`, values).then(res => {
       if (res.data.code === 1) {
@@ -63,7 +83,7 @@ export default function CodeLogin() {
               },
             ]}
           >
-            <Input prefix={<PhoneOutlined className="site-form-item-icon" />} placeholder="phoneNum" onBlur={getPhone}/>
+            <Input prefix={<PhoneOutlined className="site-form-item-icon" />} placeholder="phoneNum" onBlur={getPhone} />
           </Form.Item>
           <Form.Item name="code" rules={[
             {
@@ -79,7 +99,8 @@ export default function CodeLogin() {
                 />
               </Col>
               <Col span={6}>
-                <Button onClick={getCode}><span>获取验证码</span></Button>
+                <Button onClick={getCode} style={{ display: buttonStatus ? '' : 'none' }}><span>获取验证码</span></Button>
+                <Button disabled style={{ display: buttonStatus ? 'none' : '' }}><span>{`${time}s后可重发`}</span></Button>
               </Col>
             </Row>
           </Form.Item>
@@ -87,11 +108,18 @@ export default function CodeLogin() {
             <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            <Button type="link" block style={{ marginTop: '10px' }} onClick={() => {
-              navigate('/login')
-            }}>
-              用户名密码登录
-            </Button>
+            <div style={{ display: 'flex', justifyContent: "center" }}>
+              <Button type="link" block style={{ marginTop: '10px' }} onClick={() => {
+                navigate('/login')
+              }}>
+                账号登陆
+              </Button>
+              <Button type="link" block style={{ marginTop: '10px' }} onClick={() => {
+                navigate('/forget')
+              }}>
+                忘记密码
+              </Button>
+            </div>
             <Button type="link" block onClick={() => {
               navigate('/register')
             }}>

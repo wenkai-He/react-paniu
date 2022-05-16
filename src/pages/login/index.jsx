@@ -72,11 +72,18 @@ export default function Login() {
             <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            <Button type="link" block style={{ marginTop: '10px' }} onClick={() => {
-              navigate('/codelogin')
-            }}>
-              短信登陆
-            </Button>
+            <div style={{ display: 'flex', justifyContent: "center" }}>
+              <Button type="link" block style={{ marginTop: '10px' }} onClick={() => {
+                navigate('/codelogin')
+              }}>
+                短信登陆
+              </Button>
+              <Button type="link" block style={{ marginTop: '10px' }} onClick={() => {
+                navigate('/forget')
+              }}>
+                忘记密码
+              </Button>
+            </div>
             <Button type="link" block onClick={() => {
               navigate('/register')
             }}>
