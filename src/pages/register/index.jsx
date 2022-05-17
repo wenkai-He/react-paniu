@@ -112,6 +112,11 @@ export default function Register() {
             <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
               Register
             </Button>
+            <Button type="link" block onClick={() => {
+              navigate('/login')
+            }}>
+              已有账号？去登陆
+            </Button>
           </Form.Item>
         </Form>
       </div>

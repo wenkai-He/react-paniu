@@ -129,7 +129,11 @@ export default function ForgetPass() {
                         <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
                             next
                         </Button>
-
+                        <Button type="link" block onClick={() => {
+                            navigate('/login')
+                        }}>
+                            去登陆
+                        </Button>
                         <Button type="link" block onClick={() => {
                             navigate('/register')
                         }}>

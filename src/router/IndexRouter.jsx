@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes,Navigate } from 'react-router-dom'
 import Login from '@/pages/login'
 import Stock from '@/pages/stock'
 import Main from '@/pages/main'
@@ -15,7 +15,7 @@ export default function IndexRouter() {
         <Route path='/forget' element={<ForgetPass />} />
         <Route path='/codelogin' element={<CodeLogin />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/*' element={<Stock />} />
+        <Route path='/*' element={localStorage.getItem('token')?<Stock />:<Navigate to="/"/>} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,24 +1,71 @@
-.c {
-    position: absolute;
-    max-width: 500px;
-    max-height: 500px;
-    width: 350px;
-    height: 200px;
-    cursor: pointer;
-    will-change: transform, opacity;
-  }
+
+
+.box{
+  width: 500px;
+  height: 320px;
+  margin: 10px;
+  text-align: center;
+  /* 相对定位 */
+  position: relative;
+  /* 开启3D效果 */
+  transform-style: preserve-3d;
+  /* 设置视距 */
+  perspective: 3000px;
+}
+.box .front{
   
-  .front,
-  .back {
-    background-size: cover;
-  }
-  
- 
-  
-  .container {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    justify-content: center;
-  }
-  
+  width: 100%;
+  height: 320px;
+  /* 弹性布局 垂直排列 垂直居中 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* 阴影 */
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  /* 设置过渡 */
+  transition: 0.5s ease;
+}
+
+.box .front span{
+  /* 渐变背景 */
+  background: skyblue;
+  /* 以区块内的文字作为裁剪区域向外裁剪，文字的背景即为区块的背景，文字之外的区域都将被裁剪掉 */
+  -webkit-background-clip: text;
+  /* 将文字透明镂空 */
+  -webkit-text-fill-color: transparent;
+}
+
+
+.box .back{
+  /* 绝对定位 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 320px;
+  background: pink;
+  padding: 30px;
+  color: #fff;
+  /* 默认不透明度为0 */
+  opacity: 0;
+  /* 默认位置下移并沿Y轴旋转-90度 */
+  transform: translateY(110px) rotateX(-90deg);
+  /* 设置过渡 */
+  transition: 0.5s ease;
+}
+.box .back p{
+  margin-top: 12px;
+  /* 文本两端对齐 */
+  text-align: justify;
+  line-height: 23px;
+}
+/* 鼠标移入卡片，两个面做出相应的变化 */
+.box:hover .front{
+  opacity: 0;
+  transform: translateY(-110px) rotateX(90deg);
+}
+.box:hover .back{
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+}
