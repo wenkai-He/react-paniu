@@ -15,7 +15,8 @@ export default function IndexRouter() {
         <Route path='/forget' element={<ForgetPass />} />
         <Route path='/codelogin' element={<CodeLogin />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/*' element={localStorage.getItem('token')?<Stock />:<Navigate to="/"/>} />
+        {/* <Route path='/*' element={localStorage.getItem('token')?<Stock />:<Navigate to="/"/>} /> */}
+        <Route path='/*' element={<Stock />} />
       </Routes>
     </BrowserRouter>
   )
