@@ -1,7 +1,7 @@
 import axios from 'axios'
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
-axios.defaults.baseURL='http://localhost:3000/api'
+axios.defaults.baseURL='http://localhost:3000'
 
 axios.interceptors.request.use(function (config) {
   if(localStorage.getItem('token')){

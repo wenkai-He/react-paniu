@@ -15,7 +15,7 @@ export default function Register() {
       return;
     }
     delete values.ConfirmPassword;
-    axios.post('/user/register', values).then(res => {
+    axios.post('/api1/user/register', values).then(res => {
       if (res.data.code === 0) {
         message.error('用户名已存在');
       } else {

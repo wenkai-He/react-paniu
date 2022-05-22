@@ -6,8 +6,7 @@ export default function StockHome() {
     const [Data, setData] = useState([]);
     const { Search } = Input;
     useEffect(() => {
-        axios.get(`/stock/getMostRiseStock`).then(res => {
-            console.log(res.data);
+        axios.get(`/api1/stock/getMostRiseStock`).then(res => {
             setData(res.data);
         })
     }, [])

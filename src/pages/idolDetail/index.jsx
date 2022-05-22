@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { PageHeader, Descriptions, message, Timeline } from 'antd';
+import { PageHeader, Descriptions, message, Timeline} from 'antd';
 import { useLocation } from 'react-router-dom';
 import * as echarts from 'echarts';
 import { Link } from 'react-router-dom';
@@ -14,36 +14,35 @@ export default function IdolDetail() {
   const location = useLocation()
   const expertId = location.pathname.slice(12)
   useEffect(() => {
-    axios.get(`/expert/findById?id=${expertId}`).then(res => {
+    axios.get(`/api1/expert/findById?id=${expertId}`).then(res => {
       setidolInfo(res.data)
     })
   }, [expertId])
 
   useEffect(() => {
-    axios.get(`/follow/checkState?user_id=${id}&expert_id=${expertId}`).then(res => {
+    axios.get(`/api1/follow/checkState?user_id=${id}&expert_id=${expertId}`).then(res => {
       setLike(res.data.code)
     })
   }, [id, expertId])
 
   const handleToLike = () => {
     setLike(1)
-    axios.get(`/follow/followById?user_id=${id}&expert_id=${expertId}`).then(res => {
+    axios.get(`/api1/follow/followById?user_id=${id}&expert_id=${expertId}`).then(res => {
       message.success(`关注成功`);
     })
   }
   const handleToUnlike = () => {
     setLike(0)
-    axios.get(`/follow/deleteById?user_id=${id}&expert_id=${expertId}`).then(res => {
+    axios.get(`/api1/follow/deleteById?user_id=${id}&expert_id=${expertId}`).then(res => {
       message.success(`取关成功`);
     })
   }
 
 
   useEffect(() => {
-    axios.get(`/expert/getDeals?id=${expertId}`).then(res => {
-      renderHotView(res.data)
-      setDealInfo(res.data)
-      console.log(res.data)
+    axios.get(`/api1/expert/getDeals?id=${expertId}`).then(res => {
+        renderHotView(res.data)
+        setDealInfo(res.data)
     })
     return () => {
       window.onresize = null
@@ -136,24 +135,30 @@ export default function IdolDetail() {
               <span className='iconfont' style={{ fontSize: '20px', paddingLeft: '10px', cursor: 'pointer', display: Like === 0 ? '' : 'none' }} onClick={() => handleToLike()}>&#xe603;</span>
               <span className='iconfont' style={{ fontSize: '20px', paddingLeft: '10px', cursor: 'pointer', color: 'pink', display: Like === 1 ? '' : 'none' }} onClick={() => handleToUnlike()}>&#xe614;</span>
             </div>}
+            avatar={{ src: idolInfo.expertAvatar }}
           >
             <Descriptions size="small" column={3}>
               <Descriptions.Item label="段位">{idolInfo.level}</Descriptions.Item>
-              <Descriptions.Item label="仓位">{idolInfo.storage}</Descriptions.Item>
-              <Descriptions.Item label="区域">{idolInfo.successRate}</Descriptions.Item>
-              <Descriptions.Item label="粉丝数"><span style={{ color: 'green' }}>{idolInfo.followerNum}</span></Descriptions.Item>
-              <Descriptions.Item label="总利润率"><span style={{ color: 'green' }}>{idolInfo.totalProfitRatio}</span></Descriptions.Item>
+              <Descriptions.Item label="仓位">{idolInfo.stockPercent}</Descriptions.Item>
+              <Descriptions.Item label="选股成功率">{idolInfo.successRate}</Descriptions.Item>
+              <Descriptions.Item label="总利润率"><span style={{ color: 'green' }}>{idolInfo.totalProfit}</span></Descriptions.Item>
+              <Descriptions.Item label="总资产"><span style={{ color: 'green' }}>{idolInfo.totalAsset}元</span></Descriptions.Item>
+              <Descriptions.Item label="粉丝数"><span style={{ color: 'green' }}>{idolInfo.follower}</span></Descriptions.Item>
+              <Descriptions.Item label="月利润率"><span style={{ color: 'green' }}>{idolInfo.monthProfit}</span></Descriptions.Item>
+              <Descriptions.Item label="周利润率"><span style={{ color: 'green' }}>{idolInfo.weekProfit}</span></Descriptions.Item>
+              <Descriptions.Item label="日利润率"><span style={{ color: 'green' }}>{idolInfo.dayProfit}</span></Descriptions.Item>
+
             </Descriptions>
           </PageHeader>
 
         </div>
       }
-      <div ref={hotRef} style={{ height: '400px', marginTop: '30px', width: '100%' }}></div>
-      <div style={{marginLeft:'-100px',marginTop:'-50px'}}>
-        <Timeline mode='left'>
+      <div ref={hotRef} style={{ height: '400px', marginTop: '30px', width: '100%'}}></div>
+      <div style={{ marginLeft: '-100px', marginTop: '-50px'}}>
+        <Timeline mode='left' >
           {
-            dealInfo.map((item,index)=>{
-              return <Timeline.Item key={index} color={item.method==='买入'?'green':'red'} label={item.trade_time}>
+            dealInfo.map((item, index) => {
+              return <Timeline.Item key={index} color={item.method === '买入' ? 'green' : 'red'} label={item.trade_time}>
                 {item.method}
                 {<Link to={`/stock/detail/${item.code}`}>{item.stock_name}</Link>}
                 {`${item.amount}股`}

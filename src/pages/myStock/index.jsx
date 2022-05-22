@@ -6,7 +6,7 @@ export default function MyStock() {
 const {id}=JSON.parse(localStorage.getItem('user'))
 const [Data, setData] = useState([]);
 useEffect(() => {
-  axios.get(`/star/findStarByUserId?user_id=${id}`).then(res=>{
+  axios.get(`/api1/star/findStarByUserId?user_id=${id}`).then(res=>{
     console.log(res.data);
     setData(res.data);
   })

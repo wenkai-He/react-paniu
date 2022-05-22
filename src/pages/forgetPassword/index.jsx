@@ -24,7 +24,7 @@ export default function ForgetPass() {
             return;
         }
         setbuttonStatus(false)
-        axios.post(`/user/login/getCode?phoneNum=${phoneNum}`).then(res => {
+        axios.post(`/api1/user/login/getCode?phoneNum=${phoneNum}`).then(res => {
             message.success('验证码已发送')
         },err=>{
             message.error(err)
@@ -47,7 +47,7 @@ export default function ForgetPass() {
             message.error('两次密码不一样，请重试');
             return;
         }
-        axios.post(`/user/updateUser?username=${username}&password=${values.password}`, values).then(res => {
+        axios.post(`/api1/user/updateUser?username=${username}&password=${values.password}`, values).then(res => {
             if (res.data.code === 1) {
                 message.success('密码重置成功,请登录');
                 localStorage.removeItem('token')
@@ -61,7 +61,7 @@ export default function ForgetPass() {
         })
     };
     const onFinish1 = (values) => {
-        axios.post(`/user/login/verifyCode`, values).then(res => {
+        axios.post(`/api1/user/login/verifyCode`, values).then(res => {
             if (res.data.code === 1) {
                 localStorage.setItem('token', res.data.token)
                 setShow(false)
@@ -73,7 +73,7 @@ export default function ForgetPass() {
         }, err => {
             message.error('This is an error message' + err);
         }).then(res => {
-            axios.get(`/user/getUserByPhoneNum?phoneNum=${phoneNum}`).then(res => {
+            axios.get(`/api1/user/getUserByPhoneNum?phoneNum=${phoneNum}`).then(res => {
                 if (res.status === 200) {
                     setusername(res.data.username)
                 } else {

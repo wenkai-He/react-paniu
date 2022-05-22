@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function IdolHome() {
 const [Data, setData] = useState([]);
 useEffect(() => {
-  axios.get(`/expert/findAllExpert`).then(res=>{
+  axios.get(`/api1/expert/findAllExpert`).then(res=>{
     setData(res.data);
   })
 },[])
@@ -20,9 +20,9 @@ useEffect(() => {
     },
     {
       title: 'totalProfitRatio',
-      dataIndex: 'totalProfitRatio',
+      dataIndex: 'totalProfit',
       sorter: {
-        compare: (a, b) => a.totalProfitRatio - b.totalProfitRatio,
+        compare: (a, b) => a.totalProfit.split('%')[0] - b.totalProfit.split('%')[0],
        
       },
     },
@@ -30,15 +30,15 @@ useEffect(() => {
       title: 'level',
       dataIndex: 'level',
       sorter: {
-        compare: (a, b) => a.math - b.math,
+        compare: (a, b) => a.level - b.level,
         
       },
     },
     {
       title: 'follower',
-      dataIndex: 'followerNum',
+      dataIndex: 'follower',
       sorter: {
-        compare: (a, b) => a.followerNum - b.followerNum,
+        compare: (a, b) => a.follower - b.follower,
        
       },
     },
@@ -46,8 +46,7 @@ useEffect(() => {
       title: 'successRate',
       dataIndex: 'successRate',
       sorter: {
-        compare: (a, b) => a.successRate - b.successRate,
-        
+        compare: (a, b) => a.successRate.split('%')[0] - b.successRate.split('%')[0],
       },
     },
   ];

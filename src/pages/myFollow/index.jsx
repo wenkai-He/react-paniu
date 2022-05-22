@@ -6,7 +6,7 @@ export default function MyFollow() {
 const {id}=JSON.parse(localStorage.getItem('user'))
 const [Data, setData] = useState([]);
 useEffect(() => {
-  axios.get(`/follow/findFollowByUserId?id=${id}`).then(res=>{
+  axios.get(`/api1/follow/findFollowByUserId?id=${id}`).then(res=>{
     setData(res.data);
   })
 }, [id])

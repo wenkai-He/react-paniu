@@ -8,7 +8,7 @@ export default function Login() {
   const navigate = useNavigate()
   const onFinish = (values) => {
     const { username } = values
-    axios.post(`/user/login`, values).then(res => {
+    axios.post(`/api1/user/login`, values).then(res => {
       if (res.data.code === 1) {
         localStorage.setItem('token', res.data.token)
       } else {
@@ -18,7 +18,7 @@ export default function Login() {
     }, err => {
       message.error('This is an error message' + err);
     }).then(res => {
-      axios.get(`/user/UserInfo?username=${username}`).then(res => {
+      axios.get(`/api1/user/UserInfo?username=${username}`).then(res => {
         if (res.status === 200) {
           message.success(`登陆成功，${username}欢迎回来`);
           localStorage.setItem('user', JSON.stringify(res.data))

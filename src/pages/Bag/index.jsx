@@ -1,29 +1,13 @@
-import React,{useState} from 'react'
-import { Button } from 'antd'
-import style from './index.module.css'
+import React,{useEffect} from 'react'
+import axios from 'axios'
 export default function Bag() {
-  const [status, setstatus] = useState(false)
-  const change=()=>{
-    setstatus(true)
-    }
+  useEffect(() => {
+    axios.get('/api2/findStockRange?code=sh600519&start=20200101&end=20220520').then(res=>{
+      console.log(res.data);
+    })       
+  }, [])
+  
   return (
-    <div>
-      <Button onClick={()=>change()}>点我</Button>
-        <div className={style['box']}>
-            <div className={style['front']} style={{opacity:status?'0':'',
-            transform:status?'translateX(-110px)':'',
-            // transform:status?'rotateX(+' + 90 + 'deg)':''
-            }}>
-                <span>apple</span>
-            </div>
-            <div className={style['back']} style={{opacity:status?'1':'',
-            transform:status?'translateX(0px)':'',
-            // transform:status?'rotateX(+' + 0 + 'deg)':''
-            }}>
-                <span>apple</span>
-                <p>HTML5+CSS3实现悬停翻转的3D卡片</p>
-            </div>
-        </div>
-    </div>
+    <div>Bag</div>
   )
 }

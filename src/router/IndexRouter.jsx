@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes,Navigate } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from '@/pages/login'
 import Stock from '@/pages/stock'
 import Main from '@/pages/main'

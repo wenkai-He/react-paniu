@@ -22,7 +22,7 @@ export default function CodeLogin() {
         return;
     }
     setbuttonStatus(false)
-    axios.post(`/user/login/getCode?phoneNum=${phoneNum}`).then(res => {
+    axios.post(`/api1/user/login/getCode?phoneNum=${phoneNum}`).then(res => {
         message.success('验证码已发送')
     },err=>{
         message.error(err)
@@ -40,7 +40,7 @@ export default function CodeLogin() {
     }, 1000);
 }
   const onFinish = (values) => {
-    axios.post(`/user/login/verifyCode`, values).then(res => {
+    axios.post(`/api1/user/login/verifyCode`, values).then(res => {
       if (res.data.code === 1) {
         localStorage.setItem('token', res.data.token)
       } else {
@@ -50,7 +50,7 @@ export default function CodeLogin() {
     }, err => {
       message.error('This is an error message' + err);
     }).then(res => {
-      axios.get(`/user/getUserByPhoneNum?phoneNum=${phoneNum}`).then(res => {
+      axios.get(`/api1/user/getUserByPhoneNum?phoneNum=${phoneNum}`).then(res => {
         if (res.status === 200) {
           message.success(`登陆成功，${res.data.username}欢迎回来`);
           localStorage.setItem('user', JSON.stringify(res.data))
