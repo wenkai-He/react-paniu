@@ -8,7 +8,7 @@ import Bag from '../Bag';
 import MyFollow from '../myFollow';
 import MyStock from '../myStock';
 import IdolDetail from '../idolDetail';
-import StockDetail from '../followStockDetail';
+import StockDetail from '../StockDetail';
 import StockHome from '../stockhome';
 import './index.css'
 const { Content } = Layout;
