@@ -7,6 +7,7 @@ const {id}=JSON.parse(localStorage.getItem('user'))
 const [Data, setData] = useState([]);
 useEffect(() => {
   axios.get(`/api1/follow/findFollowByUserId?id=${id}`).then(res=>{
+    console.log(res.data);
     setData(res.data);
   })
 }, [id])
@@ -16,15 +17,14 @@ useEffect(() => {
       title: 'Name',
       dataIndex: 'expert_name',
       render: (expert_name, item) => {
-        console.log(item);
         return <Link to={`/stock/idol/${item.expert_id}`}>{expert_name}</Link>
     }
     },
     {
       title: 'total_profit_ratio',
-      dataIndex: 'total_profit_ratio',
+      dataIndex: 'total_profit',
       sorter: {
-        compare: (a, b) => a.total_profit_ratio - b.total_profit_ratio,
+        compare: (a, b) => a.total_profit.split('%')[0] - b.total_profit.split('%')[0],
         
       },
     },
@@ -38,9 +38,9 @@ useEffect(() => {
     },
     {
       title: 'follower',
-      dataIndex: 'follower_num',
+      dataIndex: 'follower',
       sorter: {
-        compare: (a, b) => a.follower_num - b.follower_num,
+        compare: (a, b) => a.follower - b.follower,
        
       },
     },
@@ -48,7 +48,7 @@ useEffect(() => {
       title: 'success_rate',
       dataIndex: 'success_rate',
       sorter: {
-        compare: (a, b) => a.success_rate - b.success_rate,
+        compare: (a, b) => a.success_rate.split('%')[0] - b.success_rate.split('%')[0],
         
       },
     },
