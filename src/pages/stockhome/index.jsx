@@ -34,7 +34,6 @@ export default function StockHome() {
             sorter: {
                 compare: (a, b) => a.price - b.price,
             },
-            
             render: (price) => <span>{price === undefined || '' ? 0 : price}</span>
         },
         {
@@ -43,8 +42,7 @@ export default function StockHome() {
             sorter: {
                 compare: (a, b) => a.fluctuation - b.fluctuation,
             },
-            
-            render: (fluctuation) => <span>{fluctuation === undefined || '' ? 0 : fluctuation}</span>
+            render: (fluctuation) => <span style={{color:fluctuation<0?'green':'red'}}>{fluctuation === undefined || '' ? '0%' : `${fluctuation}%`}</span>
         },
     ];
     const onSearch = (value) => {

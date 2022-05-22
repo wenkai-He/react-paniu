@@ -27,6 +27,9 @@ useEffect(() => {
         compare: (a, b) => a.total_profit.split('%')[0] - b.total_profit.split('%')[0],
         
       },
+      render:(num)=>{
+        return <span style={{color:num<0?'green':'red'}}>{num}</span>
+      }
     },
     {
       title: 'level',

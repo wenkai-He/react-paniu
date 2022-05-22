@@ -5,7 +5,7 @@ import TopHeader from '@/components/newssandbox/TopHeader'
 import { Route, Routes } from 'react-router-dom'
 import IdolHome from '../idolhome'
 import Bag from '../Bag';
-import MyFollow from '../myFollow';
+import MyFollow from '../myFollow'; 
 import MyStock from '../myStock';
 import IdolDetail from '../idolDetail';
 import StockDetail from '../StockDetail';
@@ -13,6 +13,7 @@ import StockHome from '../stockhome';
 import './index.css'
 const { Content } = Layout;
 export default function NewsSandBox() {
+  
   return (
     <Layout>
       <SideMenu />
@@ -27,7 +28,6 @@ export default function NewsSandBox() {
             overflow: 'auto'
           }}
         >
-
           <Routes>
             <Route path='/stock/idolhome' element={<IdolHome />} />
             <Route path='/stock/stockhome' element={<StockHome />} />

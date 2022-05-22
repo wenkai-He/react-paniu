@@ -41,8 +41,13 @@ export default function IdolDetail() {
 
   useEffect(() => {
     axios.get(`/api1/expert/getDeals?id=${expertId}`).then(res => {
+      if(res.data.length!==0){
         renderHotView(res.data)
         setDealInfo(res.data)
+      }else{
+        return;
+      }
+        
     })
     return () => {
       window.onresize = null
@@ -137,16 +142,17 @@ export default function IdolDetail() {
             </div>}
             avatar={{ src: idolInfo.expertAvatar }}
           >
+        
             <Descriptions size="small" column={3}>
-              <Descriptions.Item label="段位">{idolInfo.level}</Descriptions.Item>
+              <Descriptions.Item label="段位"><span>{idolInfo.level&&idolInfo.level[0]==='初'?'0段':idolInfo.level}</span></Descriptions.Item>
               <Descriptions.Item label="仓位">{idolInfo.stockPercent}</Descriptions.Item>
               <Descriptions.Item label="选股成功率">{idolInfo.successRate}</Descriptions.Item>
-              <Descriptions.Item label="总利润率"><span style={{ color: 'green' }}>{idolInfo.totalProfit}</span></Descriptions.Item>
-              <Descriptions.Item label="总资产"><span style={{ color: 'green' }}>{idolInfo.totalAsset}元</span></Descriptions.Item>
-              <Descriptions.Item label="粉丝数"><span style={{ color: 'green' }}>{idolInfo.follower}</span></Descriptions.Item>
-              <Descriptions.Item label="月利润率"><span style={{ color: 'green' }}>{idolInfo.monthProfit}</span></Descriptions.Item>
-              <Descriptions.Item label="周利润率"><span style={{ color: 'green' }}>{idolInfo.weekProfit}</span></Descriptions.Item>
-              <Descriptions.Item label="日利润率"><span style={{ color: 'green' }}>{idolInfo.dayProfit}</span></Descriptions.Item>
+              <Descriptions.Item label="总利润率"><span style={{color:idolInfo.totalProfit&&idolInfo.totalProfit[0]==='-'?'green':'red'}}>{idolInfo.totalProfit}</span></Descriptions.Item>
+              <Descriptions.Item label="总资产"><span>{idolInfo.totalAsset}元</span></Descriptions.Item>
+              <Descriptions.Item label="粉丝数"><span>{idolInfo.follower}</span></Descriptions.Item>
+              <Descriptions.Item label="月利润率"><span style={{color:idolInfo.monthProfit&&idolInfo.monthProfit[0]==='-'?'green':'red'}}>{idolInfo.monthProfit}</span></Descriptions.Item>
+              <Descriptions.Item label="周利润率"><span style={{color:idolInfo.weekProfit&&idolInfo.weekProfit[0]==='-'?'green':'red'}}>{idolInfo.weekProfit}</span></Descriptions.Item>
+              <Descriptions.Item label="日利润率"><span style={{color:idolInfo.dayProfit&&idolInfo.dayProfit[0]==='-'?'green':'red'}}>{idolInfo.dayProfit}</span></Descriptions.Item>
 
             </Descriptions>
           </PageHeader>

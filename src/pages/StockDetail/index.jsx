@@ -301,10 +301,10 @@ function calculateMA(dayCount) {
           >
             <Descriptions size="small" column={2}>
               <Descriptions.Item label="price">{stockInfo.price===undefined?0:stockInfo.price}</Descriptions.Item>
-              <Descriptions.Item label="fluctuation">{stockInfo.fluctuation===undefined?0:stockInfo.fluctuation}</Descriptions.Item>
+              <Descriptions.Item label="fluctuation"><span style={{color:stockInfo.fluctuation<0?'green':'red'}}>{stockInfo.fluctuation===undefined?'0%':`${stockInfo.fluctuation}%`}</span></Descriptions.Item>
             </Descriptions>
           </PageHeader>
-
+          
         </div>
       }
       <div ref={KRef} style={{ height: '300px', marginTop: '30px', width: '100%'}}></div>

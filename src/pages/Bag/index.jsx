@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Bag() {
   return (
-    <div>Bag</div>
+    <div>敬请期待</div>
   )
 }

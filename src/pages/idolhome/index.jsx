@@ -23,16 +23,28 @@ useEffect(() => {
       dataIndex: 'totalProfit',
       sorter: {
         compare: (a, b) => a.totalProfit.split('%')[0] - b.totalProfit.split('%')[0],
-       
       },
+      render:(num)=>{
+        return <span style={{color:num[0]==='-'?'green':'red'}}>{num}</span>
+      }
     },
     {
       title: 'level',
       dataIndex: 'level',
       sorter: {
-        compare: (a, b) => a.level - b.level,
-        
+        compare: (a, b) => {
+          if(a.level[0]==='初'){
+            a.level='0段'
+          }
+          if(b.level[0]==='初'){
+            b.level='0段'
+          }
+          return a.level[0] - b.level[0]
+        },
       },
+      render:(level)=>{
+        return <span>{level[0]==='初'?'0段':level}</span>
+      }
     },
     {
       title: 'follower',

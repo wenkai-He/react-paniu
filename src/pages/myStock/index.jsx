@@ -41,6 +41,9 @@ useEffect(() => {
       sorter: {
         compare: (a, b) => a.fluctuation - b.fluctuation,
       },
+      render:(fluctuation)=>{
+        return <span style={{color:fluctuation<0?'green':'red'}}>{`${fluctuation}%`}</span>
+      }
     },
   ];
 
